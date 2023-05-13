@@ -17,9 +17,9 @@ def input_routine():
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_DOWN:
-                player1_speed -= 3
+                player1_speed -= 7
             elif event.key == pygame.K_UP:
-                player1_speed += 3
+                player1_speed += 7
 
 
 def drawing():
