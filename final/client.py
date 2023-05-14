@@ -12,7 +12,7 @@ class Game():
     def __init__(self, w, h):
         self.n = Network()
         self.run = True
-        self.canvas = Canvas(w, h, bg_color, "testing")
+        self.canvas = Canvas(w, h, bg_color, "client side")
         self.player = Player(w - 35, 30, yellow, 15, 80)
         self.ball = Ball(w/2, h/2, 30, 10, 10, red)
 
@@ -20,11 +20,11 @@ class Game():
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(60)
+            self.input_handling()
+            # data = self.n.send_n_rcv(make_pos((0, 0, 0, 0)))
 
-            data = self.n.send_n_rcv(make_pos((0, 0, 0, 0)))
-
-            self.player.p.x, self.player.p.y = (data[0], data[1])
-            self.ball.b.x, self.ball.b.y = (data[2], data[3])
+            # self.player.p.x, self.player.p.y = (data[0], data[1])
+            # self.ball.b.x, self.ball.b.y = (data[2], data[3])
 
             self.render()
         pygame.quit()
@@ -34,6 +34,11 @@ class Game():
         self.player.draw(self.canvas.get_canvas())
         self.ball.draw(self.canvas.get_canvas())
         self.canvas.update()
+
+    def input_handling(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.run = False
 
 
 def main():
