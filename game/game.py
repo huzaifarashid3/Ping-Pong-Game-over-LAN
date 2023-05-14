@@ -109,8 +109,9 @@ def player2_animation():
 
 def main():
     n = Network()
-    start_pos = read_pos(n.getPos())
-    print(start_pos)
+    rd_pos = read_pos(n.getPos())
+    # print(start_pos)
+    ball.x, ball.y = rd_pos
     run = True
     # while run:
     #     input_routine()
