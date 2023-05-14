@@ -9,8 +9,6 @@ class Network():
         self.addr = (self.server, self.port)
         self.id = self.connect()
         print(self.id)
-        for i in range(10):
-            print(self.send(str(i)))
 
     def connect(self):
         try:
@@ -23,8 +21,8 @@ class Network():
     def send(self, data):
         try:
             self.client.send(str.encode(data))
-        except:
-            pass
+        except socket.error as e:
+            print(e)
         return self.client.recv(2048).decode()
 
 
