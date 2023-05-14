@@ -4,25 +4,28 @@ from player import Player
 from ball import Ball
 from canvas import Canvas
 from helper_functions import *
+from server import *
 
 pygame.init()
 
 
 class Game():
     def __init__(self, w, h):
-        # self.n = Network()
-        # self.startPos = read_pos(self.n.getPos())
+        self.server = Server("172.21.122.101", 5555)
         self.player = Player(10, 20, yellow, 15, 80)
         self.ball = Ball(w/2, h/2, 30, 10, 10, red)
         self.canvas = Canvas(w, h, bg_color, "testing")
         self.run = True
+        self.inputs = []
 
     def start(self):
+        Server.initiate()
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(60)
             self.input_handling()
             self.modify()
+            self.sync()
             self.render()
         pygame.quit()
 
@@ -48,3 +51,8 @@ class Game():
         self.player.move()
         self.ball.move()
         self.ball.collision(self.player.p)
+
+    def sync(self):
+        inputs = self.server.send(
+            (self.player.p.x, self.player.p.y, self.ball.b.x, self.ball.b.y))
+        pass

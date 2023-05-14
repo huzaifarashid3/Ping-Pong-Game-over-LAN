@@ -1,4 +1,5 @@
 import socket
+from helper_functions import *
 
 
 class Network():
@@ -7,23 +8,17 @@ class Network():
         self.server = "172.21.122.101"
         self.port = 5555
         self.addr = (self.server, self.port)
-
-        self.pos = self.connect()
+        self.connect()
 
     def connect(self):
         try:
             self.client.connect(self.addr)
-            return self.client.recv(2048).decode()
         except:
             print("failed")
-            pass
 
     def send(self, data):
         try:
-            self.client.send(str.encode(data))
+            self.client.send(str.encode(make_pos(data)))
         except socket.error as e:
             print(e)
-        return self.client.recv(2048).decode()
-
-    def getData(self):
-        return self.pos
+        return read_pos(self.client.recv(2048).decode())

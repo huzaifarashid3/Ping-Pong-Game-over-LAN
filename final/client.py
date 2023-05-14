@@ -21,7 +21,7 @@ class Game():
         while self.run:
             clock.tick(60)
 
-            data = self.n.getData()
+            data = self.n.send(make_pos((0, 0, 0, 0)))
 
             self.player.p.x, self.player.p.y = (data[0], data[1])
             self.ball.b.x, self.ball.b.y = (data[2], data[3])
