@@ -1,14 +1,9 @@
 import pygame
 from network import Network
+from player import Player
+from canvas import Canvas
 
 pygame.init()
-
-
-def input_handling():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-            pygame.quit()
 
 
 def read_pos(spos):
@@ -20,64 +15,39 @@ def make_pos(ipos):
     return str(ipos[0] + "," + ipos[1])
 
 
-class Canvas():
-    def __init__(self, w, h, bg_color, name="None"):
-        self.width = w
-        self.height = h
-        self.bg_color = bg_color
-        self.screen = pygame.display.set_mode((w, h))
-        pygame.display.set_caption(name)
+class Game():
+    def __init__(self, w, h):
+        self.n = Network()
+        self.startPos = read_pos(self.n.getPos())
+        self.player = Player(self.startPos[0], self.startPos[1])
+        self.canvas = Canvas(w, h, pygame.Color("grey20"), "testing")
+        self.run = True
 
-    @staticmethod
-    def update():
-        pygame.display.update()
+    def start(self):
+        clock = pygame.time.Clock()
+        while self.run:
+            clock.tick(60)
+            self.input_handling()
+            self.modify()
+            self.render()
+        pygame.quit()
 
-    def draw_text(self, text, size, x, y):
-        pygame.font.init()
-        font = pygame.font.SysFont("comicsans", size)
-        render = font.render(text, 1, (0, 0, 0))
+    def input_handling(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    self.player.vel = 10
+                if event.key == pygame.K_UP:
+                    self.player.vel = -10
+            if event.type == pygame.KEYUP:
+                self.player.vel = 0
 
-        self.screen.draw(render, (x, y))
+    def render(self):
+        self.canvas.draw_background()
+        self.player.draw(self.canvas.get_canvas())
+        self.canvas.update()
 
-    def get_canvas(self):
-        return self.screen
-
-    def draw_background(self):
-        self.screen.fill(self.bg_color)
-
-
-class Player():
-    width = height = 50
-
-    def __init__(self, startx, starty, color=(200, 150, 20)):
-        self.x = startx
-        self.y = starty
-        self.vel = 0
-        self.color = color
-
-    def draw(self):
-        pygame.draw.rect(screen, self.color, (self.x, self.y,
-                         self.width, self.height), 0)
-
-    def move(self):
-        pass
-
-
-def main():
-    run = True
-    n = Network()
-    startPos = read_pos(n.getPos())
-    p1 = Player(startPos[0], startPos[1])
-    canvas = Canvas(720, 480, pygame.Color("grey20"), "testing")
-    clock = pygame.time.Clock()
-
-    while run:
-        clock.tick(60)
-        input_handling()
-
-        canvas.draw_background()
-        p1.draw()
-        canvas.update()
-
-
-main()
+    def modify(self):
+        self.player.move()
