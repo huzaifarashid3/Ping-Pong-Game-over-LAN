@@ -8,7 +8,6 @@ class Network():
         self.port = 5555
         self.addr = (self.server, self.port)
         self.pos = self.connect()
-        self.pos = "100,100"
 
     def connect(self):
         try:

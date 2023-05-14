@@ -1,6 +1,7 @@
 import socket
-import sys
 from _thread import *
+from helper_functions import *
+
 
 server = "172.21.122.101"
 port = 5555
@@ -17,8 +18,11 @@ s.listen(2)
 print("waiting for connections...")
 
 
-def threaded_client(conn):
-    conn.send(str.encode("Connected"))
+pos = [(20, 20), (100, 20)]
+
+
+def threaded_client(conn, player):
+    conn.send(str.encode(make_pos(pos[player])))
     reply = ""
     while True:
         try:
@@ -26,7 +30,7 @@ def threaded_client(conn):
             reply = data.decode("utf-8")
 
             if not data:
-                print("disconnected...")
+                print("disconnected Player ", player)
                 break
             else:
                 print("recieved", reply)
@@ -39,8 +43,12 @@ def threaded_client(conn):
     conn.close()
 
 
+currentPlayer = 0
+
+
 while True:
     conn, addr = s.accept()
 
     print("Connected to ", addr)
-    start_new_thread(threaded_client, (conn,))
+    start_new_thread(threaded_client, (conn, currentPlayer))
+    currentPlayer += 1

@@ -1,18 +1,11 @@
 import pygame
 from network import Network
 from player import Player
+from ball import Ball
 from canvas import Canvas
+from helper_functions import *
 
 pygame.init()
-
-
-def read_pos(spos):
-    spos = spos.split(",")
-    return int(spos[0]), int(spos[1])
-
-
-def make_pos(ipos):
-    return str(ipos[0] + "," + ipos[1])
 
 
 class Game():
@@ -27,6 +20,8 @@ class Game():
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(60)
+            self.n.send(make_pos((8, 8)))
+            self.n2.send(make_pos((9, 9)))
             self.input_handling()
             self.modify()
             self.render()

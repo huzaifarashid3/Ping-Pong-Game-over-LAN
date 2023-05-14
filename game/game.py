@@ -113,18 +113,18 @@ def main():
     # print(start_pos)
     ball.x, ball.y = rd_pos
     run = True
-    # while run:
-    #     input_routine()
+    while run:
+        input_routine()
 
-    #     ball_animation()
-    #     player_animation()
-    #     player2_animation()
+        ball_animation()
+        player_animation()
+        player2_animation()
 
-    #     drawing()
+        drawing()
 
-    #     clock.tick(60)
+        clock.tick(60)
 
-    # print("game over")
+    print("game over")
 
 
 main()
