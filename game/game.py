@@ -1,10 +1,12 @@
 from pygame.locals import *
 import pygame
 import sys
+from network import Network
+
 
 client_number = 0
 
-pygame.init()
+# pygame.init()
 
 clock = pygame.time.Clock()
 
@@ -31,6 +33,15 @@ player2 = pygame.Rect(screen_width - 20 - 10, 20, 10, 50)
 
 bg_color = pygame.Color("grey20")
 yellow = (200, 150, 100)
+
+
+def read_pos(strp):
+    strp = strp.split(",")
+    return int(strp[0]), int(strp[1])
+
+
+def make_pos(tup):
+    return str(tup[0]+","+tup[1])
 
 
 def input_routine():
@@ -97,20 +108,22 @@ def player2_animation():
 
 
 def main():
-    global screen_height
+    n = Network()
+    start_pos = read_pos(n.getPos())
+    print(start_pos)
     run = True
-    while run:
-        input_routine()
+    # while run:
+    #     input_routine()
 
-        ball_animation()
-        player_animation()
-        player2_animation()
+    #     ball_animation()
+    #     player_animation()
+    #     player2_animation()
 
-        drawing()
+    #     drawing()
 
-        clock.tick(60)
+    #     clock.tick(60)
 
-    print("game over")
+    # print("game over")
 
 
 main()

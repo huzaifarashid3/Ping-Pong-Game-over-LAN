@@ -32,7 +32,7 @@ def threaded_client(conn):
                 print("recieved", reply)
                 print("sending", reply)
 
-            conn.sendall(str.encode(reply+" wow"))
+            conn.sendall(str.encode(reply))
         except:
             break
     print("lost connection...")
