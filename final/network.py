@@ -16,9 +16,7 @@ class Network():
         except:
             print("failed")
 
-    def send(self, data):
-        try:
+    def send_n_rcv(self, data):
+        with self.client:
             self.client.send(str.encode(make_pos(data)))
-        except socket.error as e:
-            print(e)
-        return read_pos(self.client.recv(2048).decode())
+            return read_pos(self.client.recv(2048).decode())

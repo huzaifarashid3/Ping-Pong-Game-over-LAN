@@ -16,16 +16,15 @@ class Game():
         self.ball = Ball(w/2, h/2, 30, 10, 10, red)
         self.canvas = Canvas(w, h, bg_color, "testing")
         self.run = True
-        self.inputs = []
+        self.inputs = (0, 0, 0, 0)
 
     def start(self):
-        # Server.initiate()
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(60)
+            self.sync()
             self.input_handling()
             self.modify()
-            self.sync()
             self.render()
         pygame.quit()
 
@@ -53,6 +52,6 @@ class Game():
         self.ball.collision(self.player.p)
 
     def sync(self):
-        inputs = self.server.send(
+        inputs = self.server.send_n_rcv(
             (self.player.p.x, self.player.p.y, self.ball.b.x, self.ball.b.y))
         pass
