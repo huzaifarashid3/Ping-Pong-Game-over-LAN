@@ -1,13 +1,15 @@
 import pygame
+from helper_functions import *
 
 
 class Ball():
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-        self.diameter = 20
-        self.velx = 0
-        self.vely = 0
+    def __init__(self, x, y, diameter, velx=10, vely=10, color=red):
+        self.x = x
+        self.y = y
+        self.diameter = diameter
+        self.velx = velx
+        self.vely = vely
+        self.color = color
 
     def draw(self, screen):
         pygame.draw.ellipse(screen, self.color,

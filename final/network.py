@@ -7,8 +7,8 @@ class Network():
         self.server = "172.21.122.101"
         self.port = 5555
         self.addr = (self.server, self.port)
+
         self.pos = self.connect()
-        self.pos = "10,11"
 
     def connect(self):
         try:
@@ -25,5 +25,5 @@ class Network():
             print(e)
         return self.client.recv(2048).decode()
 
-    def getPos(self):
+    def getData(self):
         return self.pos

@@ -10,10 +10,10 @@ pygame.init()
 
 class Game():
     def __init__(self, w, h):
-        self.n = Network()
-        self.startPos = read_pos(self.n.getPos())
-        self.player = Player(self.startPos[0], self.startPos[1], yellow)
-        self.ball = Ball(400, 400, 30, red)
+        # self.n = Network()
+        # self.startPos = read_pos(self.n.getPos())
+        self.player = Player(10, 20, yellow, 15, 80)
+        self.ball = Ball(w/2, h/2, 30, 10, 10, red)
         self.canvas = Canvas(w, h, bg_color, "testing")
         self.run = True
 
@@ -21,7 +21,6 @@ class Game():
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(60)
-            self.n.send(make_pos((8, 8)))
             self.input_handling()
             self.modify()
             self.render()
@@ -47,3 +46,5 @@ class Game():
 
     def modify(self):
         self.player.move()
+        self.ball.move()
+        self.ball.collision(self.player.p)

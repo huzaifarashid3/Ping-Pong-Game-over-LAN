@@ -7,6 +7,7 @@ class Network():
         self.server = "172.21.122.101"
         self.port = 5555
         self.addr = (self.server, self.port)
+
         self.pos = self.connect()
 
     def connect(self):
