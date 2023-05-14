@@ -4,9 +4,8 @@ from helper_functions import *
 
 
 class Server():
-    def __init__(self, ip="172.21.122.101", port=5555):
+    def __init__(self, ip="localhost", port=5555):
         self.ip = ip
-        self.ip = "localhost"
         self.port = port
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:

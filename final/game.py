@@ -11,7 +11,7 @@ pygame.init()
 
 class Game():
     def __init__(self, w, h):
-        self.server = Server("172.21.122.101", 5555)
+        self.server = Server()
         self.player = Player(10, 20, yellow, 15, 80)
         self.ball = Ball(w/2, h/2, 30, 10, 10, red)
         self.canvas = Canvas(w, h, bg_color, "server side")
