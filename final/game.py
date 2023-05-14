@@ -19,7 +19,7 @@ class Game():
         self.inputs = []
 
     def start(self):
-        Server.initiate()
+        # Server.initiate()
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(60)
