@@ -11,18 +11,22 @@ pygame.init()
 
 class Game():
     def __init__(self, w, h):
+        self.w = w
+        self.h = h
         self.server = Server("172.21.122.101")
         self.player = Player(10, 20, yellow, 15, 80)
         self.player2 = Player(w - 35, 20, yellow, 15, 80)
         self.ball = Ball(w/2, h/2, 30, 10, 10, red)
         self.canvas = Canvas(w, h, bg_color, "server side")
         self.run = True
-        self.inputs = (0, 0, 0, 0, 0, 0)
+        self.inputs = (0, 0, 0, 0, 0, 0, 0, 0)
 
     def start(self):
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(60)
+
+            self.inputs = (0, 0, 0, 0, 0, 0, 0, 0)
 
             self.inputs = self.server.rvc()
 
@@ -30,7 +34,7 @@ class Game():
 
             self.modify()
 
-            self.server.send((self.player.p.x, self.player.p.y,
+            self.server.send((self.player.p.x, self.player.p.y, self.player2.p.x, self.player2.p.y,
                               self.ball.b.x, self.ball.b.y, 0, 0))
 
             self.render()
@@ -48,16 +52,18 @@ class Game():
             if event.type == pygame.KEYUP:
                 self.player.vel = 0
 
-        if self.inputs[4] == pygame.KEYDOWN:
-            if self.inputs[5] == pygame.K_DOWN:
+        if self.inputs[6] == 1:
+            if self.inputs[7] == 1:
                 self.player2.vel = 10
-            if self.inputs[5] == pygame.K_UP:
+            if self.inputs[7] == 2:
                 self.player2.vel = -10
-        if self.inputs[4] == pygame.KEYUP:
+        if self.inputs[6] == 2:
             self.player2.vel = 0
 
     def render(self):
         self.canvas.draw_background()
+        pygame.draw.aaline(self.canvas.get_canvas(),
+                           yellow, (self.w/2, 0), (self.w/2, self.h))
         self.player.draw(self.canvas.get_canvas())
         self.player2.draw(self.canvas.get_canvas())
         self.ball.draw(self.canvas.get_canvas())
@@ -66,6 +72,6 @@ class Game():
     def modify(self):
         self.player.move()
         self.player2.move()
-        self.ball.move()
         self.ball.collision(self.player.p)
-        # self.ball.collision(self.player2.p)
+        self.ball.collision(self.player2.p)
+        self.ball.move()

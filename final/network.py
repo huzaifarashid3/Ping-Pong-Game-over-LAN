@@ -19,15 +19,18 @@ class Network():
     def send(self, data):
         try:
             self.client.send(str.encode(make_pos(data)))
+            print("sending ", make_pos(data))
         except:
             pass
 
     def rvc(self):
         try:
-            return read_pos(self.client.recv(2048).decode())
+            data = read_pos(self.client.recv(2048).decode())
+            print("recieved ", make_pos(data))
+            return data
         except:
             print("rcv failed")
-            return (300, 300, 400, 400, 0, 0)
+            return (0, 0, 0, 0, 0, 0, 0, 0)
 
     def threaded_client(self):
         pass
