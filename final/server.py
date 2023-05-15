@@ -20,7 +20,26 @@ class Server():
 
         print("Connected to ", self.addr)
 
-    def send_n_rcv(self, data):
-        with self.conn:
+        # start_new_thread(self.threaded_client)
+
+    def send(self, data=(30, 20, 100, 400, 0, 0)):
+        try:
             self.conn.sendall(str.encode(make_pos(data)))
+            print(make_pos(data))
+        except:
+            pass
+
+    def rvc(self):
+        try:
             return read_pos(self.conn.recv(2048).decode())
+        except:
+            print("rcv failed")
+            return (300, 300, 400, 400, 0, 0)
+
+    def threaded_client(self):
+
+        while True:
+            continue
+
+        self.conn.close()
+        pass
